@@ -1,3 +1,18 @@
 h1 {
     color: red;
 }
+
+#gameBoard
+{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    border: 5px solid red;
+}
+
+.boardGrid {
+    background-color: orange;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
