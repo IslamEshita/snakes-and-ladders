@@ -1,19 +1,164 @@
-function drawBoard()
-{
-    const gameBoard = document.getElementById('gameBoard');
+const gameBoard = document.getElementById('gameBoard');
+let player1Pos = 0;
+let player2Pos = 0;
+let turn = "Player1"
 
-    for(let i=0; i<100; i++)
+
+function play() {
+
+}
+
+function getNextTurn() {
+    if(turn === "Player1")
     {
-        const numberElem = document.createElement('div');
-        let value = String(100 - i);
-        numberElem.textContent = value;
-        numberElem.setAttribute('class', 'boardGrid');
-        numberElem.setAttribute('id', `boardGrid${value}`);
-        gameBoard.append(numberElem);
+        turn = "Player2";
+    }
+    else
+    {
+        turn = "Player1";
     }
 }
 
-document.body.onload = function()
-{
+function getRow(gridNum) {
+    let row = 0;
+
+    if(gridNum >= 91 && gridNum <= 100) {
+        row = 0;
+    }
+    else if(gridNum >= 81 && gridNum <= 90) {
+        row = 1;
+    }
+    else if(gridNum >= 71 && gridNum <= 80) {
+        row = 2;
+    }
+    else if(gridNum >= 61 && gridNum <= 70) {
+        row = 3;
+    }
+    else if(gridNum >= 51 && gridNum <= 60) {
+        row = 4;
+    }
+    else if(gridNum >= 41 && gridNum <= 50) {
+        row = 5;
+    }
+    else if(gridNum >= 31 && gridNum <= 40) {
+        row = 6;
+    }
+    else if(gridNum >= 21 && gridNum <= 30) {
+        row = 7;
+    }
+    else if(gridNum >= 11 && gridNum <= 20) {
+        row = 8;
+    }
+    else {
+        row = 9;
+    }
+
+    return row;
+}
+
+function getColumn(gridNum) {
+    
+    let column = 0;
+
+    switch(gridNum) {
+        case 10:
+        case 20:
+        case 30:
+        case 40:
+        case 50:
+        case 60:
+        case 70:
+        case 80:
+        case 90:
+        case 100:
+            column = 0;            
+            break;
+        default:            
+            column = 10 - gridNum % 10;
+            break;
+    }
+    
+    return column;
+}
+
+
+function rollButtonClicked(ev) {    
+    const num = 1 + Math.floor(Math.random()*6);
+    console.log(`Number rolled = ${num}`);
+
+    if(turn === "Player1")
+    {
+        player1Pos = player1Pos + num;
+        console.log(`Player 1 Pos = ${player1Pos}`);
+        movePlayer(1, player1Pos);
+    }
+    else
+    {
+        player2Pos = player2Pos + num;
+        console.log(`Player 2 Pos = ${player2Pos}`);
+        movePlayer(2, player2Pos);
+    }
+    
+    getNextTurn();
+}
+
+function drawPlayer(playerNum) {    
+    const player = document.createElement('img');
+    player.style.display = "none";
+    player.setAttribute('id', `player${playerNum}`);
+    player.setAttribute('src', `assets/token_player_${playerNum}.png`);
+    
+    gameBoard.append(player);
+}
+
+function movePlayer(playerNum, gridNum) {
+    const playerElement = document.getElementById(`player${playerNum}`);
+
+    const numGrids = 100;
+    const numRows = 10;
+    const numCols = 10;
+    const boardWidth = 750;
+    const boardHeight = 750;
+    const gridWidth = boardWidth / numCols;
+    const gridHeight = boardHeight / numRows; 
+
+    // Get the row, col
+    let row = getRow(gridNum);
+    let col = getColumn(gridNum);
+    console.log(`Row = ${row}, Col = ${col}`)    
+    // Get the top, bottom
+    const top = (row * gridHeight);
+    const left = (col * gridWidth);
+    console.log(`Top = ${top}, Left = ${left}`);
+
+    playerElement.style.display = "block";
+    playerElement.style.top = `${top}px`;
+    playerElement.style.left = `${left}px`;
+}
+
+function drawBoard() {
+    for(let i=100; i>=1; i--) {
+        let value = String(i);
+        
+        const boardGridItemElement = document.createElement('div');
+        boardGridItemElement.textContent = value;
+        boardGridItemElement.setAttribute('class', 'boardGridItem');
+        boardGridItemElement.setAttribute('id', `boardGridNum${value}`);
+
+        gameBoard.append(boardGridItemElement);
+    }
+}
+
+function drawSnake() {
+    
+}
+
+document.body.onload = function() {    
+    let button = document.getElementById('rollButton');
+    button.onclick = rollButtonClicked;
+
     drawBoard();
+    drawSnake();
+    drawPlayer(1);
+    drawPlayer(2);
 }
