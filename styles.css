@@ -50,6 +50,12 @@ img#ladder01 {
   height: 500px;
 }
 
+img#ladder02 {
+  top: 38px;
+  left: 350px;
+  height: 500px;
+}
+
 
 .player {
   position: absolute;

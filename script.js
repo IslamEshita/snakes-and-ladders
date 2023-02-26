@@ -5,6 +5,7 @@ const gameResult = document.getElementById('gameResult');
 
 const specialGrids = [
     { gridNum: 18, type: 'ladder', newPos: 67 },
+    { gridNum: 35, type: 'ladder', newPos: 84 },
     { gridNum: 61, type: 'snake', newPos: 6 },
     { gridNum: 99, type: 'snake', newPos: 47 },
 ]
@@ -217,6 +218,12 @@ function drawLadders() {
     ladder01.setAttribute('class', 'ladder');
     ladder01.setAttribute('src', 'assets/ladder01.png');
     gameBoard.append(ladder01);
+
+    const ladder02 = document.createElement('img');
+    ladder02.setAttribute('id', 'ladder02');
+    ladder02.setAttribute('class', 'ladder');
+    ladder02.setAttribute('src', 'assets/ladder01.png');
+    gameBoard.append(ladder02);
 }
 
 document.body.onload = function() {    
