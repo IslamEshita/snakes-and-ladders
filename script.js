@@ -1,20 +1,13 @@
 const gameBoard = document.getElementById('gameBoard');
 let player1Pos = 0;
 let player2Pos = 0;
-let turn = "Player1"
-
-
-function play() {
-
-}
+let turn = "None"
 
 function getNextTurn() {
-    if(turn === "Player1")
-    {
+    if(turn === "Player1") {
         turn = "Player2";
     }
-    else
-    {
+    else {
         turn = "Player1";
     }
 }
@@ -57,7 +50,6 @@ function getRow(gridNum) {
 }
 
 function getColumn(gridNum) {
-    
     let column = 0;
 
     switch(gridNum) {
@@ -82,21 +74,36 @@ function getColumn(gridNum) {
 }
 
 
+function getDiceValue() {
+    const dice = 1 + Math.floor(Math.random()*6);
+    console.log(`Number rolled = ${dice}`);
+
+    return dice;
+}
+
 function rollButtonClicked(ev) {    
-    const num = 1 + Math.floor(Math.random()*6);
-    console.log(`Number rolled = ${num}`);
+
+    const num = getDiceValue();
 
     if(turn === "Player1")
     {
-        player1Pos = player1Pos + num;
-        console.log(`Player 1 Pos = ${player1Pos}`);
-        movePlayer(1, player1Pos);
+        newPos = player1Pos + num;
+        if(newPos <= 100)
+        {
+            player1Pos = newPos;
+            console.log(`Player 1 Pos = ${player1Pos}`);
+            movePlayer(1, player1Pos);
+        }
     }
     else
     {
-        player2Pos = player2Pos + num;
-        console.log(`Player 2 Pos = ${player2Pos}`);
-        movePlayer(2, player2Pos);
+        newPos = player2Pos + num;
+        if(newPos <= 100)
+        {
+            player2Pos = newPos;
+            console.log(`Player 2 Pos = ${player2Pos}`);
+            movePlayer(2, player2Pos);
+        }
     }
     
     getNextTurn();
@@ -182,4 +189,5 @@ document.body.onload = function() {
     drawLadders();
     drawPlayer(1);
     drawPlayer(2);
+    getNextTurn();
 }
