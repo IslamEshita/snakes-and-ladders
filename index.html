@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <section id="heading">
-        <h1>Snakes and Ladders</h1>
-    </section>
-
-    <section id="gameBoard">
-    </section>
-
-    <section id="controls">
-        <input type="button" value="Roll" id="rollButton">
-    </section>
-    
+    <div id="gameContainer">
+        <section id="gameBoard">
+        </section>
+        <section id="controls">
+            <div id="diceControls">
+                <input type="button" value="Roll Dice" id="rollButton">
+                <p id="diceValue"></p>
+            </div>
+            <p id="gameResult"></p>
+        </section>
+    </div>
     <script src="./script.js"></script>
 </body>
 </html>

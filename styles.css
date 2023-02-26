@@ -1,5 +1,6 @@
-h1 {
-    color: red;
+#gameContainer {
+  display: flex;
+  flex-direction: row;
 }
 
 #gameBoard {
@@ -9,6 +10,7 @@ h1 {
     position: relative;
     width: 750px;
     height: 750px;
+    min-width: 750px;
 }
 
 .boardGridItem {
@@ -53,6 +55,26 @@ img#ladder01 {
   position: absolute;
   width: 50px;
   height: 50px;
-  z-index: 2;
   opacity: 0.50;
+  z-index: 2;
+}
+
+#controls {
+  margin-left: 30px;
+}
+
+#rollButton {
+  background-color: aliceblue;
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+#diceValue {
+  font-size: 90px;
+  margin-top: 0;
+}
+
+#gameResult {
+  font-size: 100px;
+  color: green;
 }

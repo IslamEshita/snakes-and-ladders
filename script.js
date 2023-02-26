@@ -1,24 +1,54 @@
 const gameBoard = document.getElementById('gameBoard');
+const rollButton = document.getElementById('rollButton');
+const diceValue = document.getElementById('diceValue');
+const gameResult = document.getElementById('gameResult');
+
+const specialGrids = [
+    { gridNum: 18, type: 'ladder', newPos: 67 },
+    { gridNum: 61, type: 'snake', newPos: 6 },
+    { gridNum: 99, type: 'snake', newPos: 47 },
+]
+
 let player1Pos = 0;
 let player2Pos = 0;
-let turn = "None"
+let turn = "None";
 
-function checkForWin()
-{
+function adjustIfSpecialGrid(pos) {
+    let newPos = pos;
+
+    for(let i=0; i<specialGrids.length; i++) {
+        if(specialGrids[i].gridNum == pos) {
+            newPos = specialGrids[i].newPos;
+            if(specialGrids[i].type == "ladder") {
+                console.log(`Climbing ladder to ${newPos} from ${pos}`);
+            }
+            else
+            {
+                console.log(`Bitten by snake at ${pos}. Going down to ${newPos}.`);
+            }
+        }
+    }
+
+    return newPos;
+}
+
+function checkForWin() {
     if(player1Pos == 100) {
-        alert("Player 1 Wins!");
+        gameResult.textContent = "Player 1 Wins!";
     }
     else if(player2Pos == 100) {
-        alert("Player 2 Wins!");
+        gameResult.textContent = "Player 2 Wins!";
     }
 }
 
 function getNextTurn() {
     if(turn === "Player1") {
         turn = "Player2";
+        rollButton.value="Roll Dice (Player 2)";
     }
     else {
         turn = "Player1";
+        rollButton.value="Roll Dice (Player 1)";
     }
 }
 
@@ -86,7 +116,7 @@ function getColumn(gridNum) {
 
 function getDiceValue() {
     const dice = 1 + Math.floor(Math.random()*6);
-    console.log(`Number rolled = ${dice}`);
+    diceValue.textContent = dice;
 
     return dice;
 }
@@ -98,20 +128,20 @@ function rollButtonClicked(ev) {
     if(turn === "Player1")
     {
         newPos = player1Pos + num;
+        newPos = adjustIfSpecialGrid(newPos);
         if(newPos <= 100)
         {
             player1Pos = newPos;
-            console.log(`Player 1 Pos = ${player1Pos}`);
             movePlayer(1, player1Pos);
         }
     }
     else
     {
         newPos = player2Pos + num;
+        newPos = adjustIfSpecialGrid(newPos);
         if(newPos <= 100)
         {
             player2Pos = newPos;
-            console.log(`Player 2 Pos = ${player2Pos}`);
             movePlayer(2, player2Pos);
         }
     }
@@ -144,11 +174,9 @@ function movePlayer(playerNum, gridNum) {
     // Get the row, col
     let row = getRow(gridNum);
     let col = getColumn(gridNum);
-    console.log(`Row = ${row}, Col = ${col}`)    
     // Get the top, bottom
     const top = (row * gridHeight);
     const left = (col * gridWidth);
-    console.log(`Top = ${top}, Left = ${left}`);
 
     playerElement.style.display = "block";
     playerElement.style.top = `${top}px`;
@@ -192,8 +220,7 @@ function drawLadders() {
 }
 
 document.body.onload = function() {    
-    let button = document.getElementById('rollButton');
-    button.onclick = rollButtonClicked;
+    rollButton.onclick = rollButtonClicked;
 
     drawBoard();
     drawSnakes();
