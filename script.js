@@ -3,6 +3,16 @@ let player1Pos = 0;
 let player2Pos = 0;
 let turn = "None"
 
+function checkForWin()
+{
+    if(player1Pos == 100) {
+        alert("Player 1 Wins!");
+    }
+    else if(player2Pos == 100) {
+        alert("Player 2 Wins!");
+    }
+}
+
 function getNextTurn() {
     if(turn === "Player1") {
         turn = "Player2";
@@ -107,6 +117,7 @@ function rollButtonClicked(ev) {
     }
     
     getNextTurn();
+    checkForWin();
 }
 
 function drawPlayer(playerNum) {    
