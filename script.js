@@ -107,7 +107,8 @@ function drawPlayer(playerNum) {
     player.style.display = "none";
     player.setAttribute('id', `player${playerNum}`);
     player.setAttribute('src', `assets/token_player_${playerNum}.png`);
-    
+    player.setAttribute('class', 'player');
+
     gameBoard.append(player);
 }
 
@@ -149,8 +150,27 @@ function drawBoard() {
     }
 }
 
-function drawSnake() {
-    
+function drawSnakes() {
+    // Add the first snake
+    const snake01 = document.createElement('img');
+    snake01.setAttribute('id', 'snake01');
+    snake01.setAttribute('class', 'snake');
+    snake01.setAttribute('src', 'assets/snake01.png');
+    gameBoard.append(snake01);
+    // Add the second snake
+    const snake02 = document.createElement('img');
+    snake02.setAttribute('id', 'snake02');
+    snake02.setAttribute('class', 'snake');
+    snake02.setAttribute('src', 'assets/snake02.png');
+    gameBoard.append(snake02);
+}
+
+function drawLadders() {
+    const ladder01 = document.createElement('img');
+    ladder01.setAttribute('id', 'ladder01');
+    ladder01.setAttribute('class', 'ladder');
+    ladder01.setAttribute('src', 'assets/ladder01.png');
+    gameBoard.append(ladder01);
 }
 
 document.body.onload = function() {    
@@ -158,7 +178,8 @@ document.body.onload = function() {
     button.onclick = rollButtonClicked;
 
     drawBoard();
-    drawSnake();
+    drawSnakes();
+    drawLadders();
     drawPlayer(1);
     drawPlayer(2);
 }

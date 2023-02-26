@@ -1,10 +1,8 @@
-h1 
-{
+h1 {
     color: red;
 }
 
-#gameBoard
-{
+#gameBoard {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     border: 3px solid blue;
@@ -13,33 +11,45 @@ h1
     height: 750px;
 }
 
-.boardGridItem 
-{
+.boardGridItem {
     background-color: lightgreen;
     border: 1px solid rgba(0, 0, 0, 0.8);
     font-size: 25px;
     text-align: center;
 }
 
-img#snake01
-{
+.snake {
   position: absolute;
-  top: 0;
-  left: 0;
   opacity: 0.75;
   z-index: 1;
 }
 
-img#snake02
-{
+img#snake01 {
+  top: -60px;
+  left: -30px;
+  height: 500px;
+}
+
+img#snake02 {
+  top: 130px;
+  left: 190px;
+  height: 610px;
+}
+
+.ladder {
   position: absolute;
-  top: 150px;
-  left: 150px;
   opacity: 0.75;
   z-index: 1;
 }
 
-img#player1, img#player2 {
+img#ladder01 {
+  top: 190px;
+  left: 125px;
+  height: 500px;
+}
+
+
+.player {
   position: absolute;
   width: 50px;
   height: 50px;
