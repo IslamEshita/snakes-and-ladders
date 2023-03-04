@@ -4,10 +4,10 @@ const diceValue = document.getElementById('diceValue');
 const gameResult = document.getElementById('gameResult');
 
 const specialGrids = [
-    { gridNum: 18, type: 'ladder', newPos: 67 },
-    { gridNum: 35, type: 'ladder', newPos: 84 },
-    { gridNum: 61, type: 'snake', newPos: 6 },
-    { gridNum: 99, type: 'snake', newPos: 47 },
+    { gridNum: 18, type: 'ladder', newPos: 64 },
+    { gridNum: 35, type: 'ladder', newPos: 87 },
+    { gridNum: 70, type: 'snake', newPos: 5 },
+    { gridNum: 99, type: 'snake', newPos: 44 },
 ]
 
 let player1Pos = 0;
@@ -93,24 +93,18 @@ function getRow(gridNum) {
 function getColumn(gridNum) {
     let column = 0;
 
-    switch(gridNum) {
-        case 10:
-        case 20:
-        case 30:
-        case 40:
-        case 50:
-        case 60:
-        case 70:
-        case 80:
-        case 90:
-        case 100:
-            column = 0;            
-            break;
-        default:            
-            column = 10 - gridNum % 10;
-            break;
-    }
-    
+    let row = getRow(gridNum);
+    if(row % 2 == 0)
+    {
+        let gridAtcol0 = (10 - row) * 10;
+        column = gridAtcol0 - gridNum;
+    }   
+    else
+    {
+        let gridAtcol9 = (10 - row) * 10;
+        column = 9 - (gridAtcol9 - gridNum);
+    } 
+   
     return column;
 }
 
@@ -176,8 +170,13 @@ function movePlayer(playerNum, gridNum) {
     let row = getRow(gridNum);
     let col = getColumn(gridNum);
     // Get the top, bottom
-    const top = (row * gridHeight);
-    const left = (col * gridWidth);
+    let top = (row * gridHeight);
+    let left = (col * gridWidth);
+    if(playerNum == 2) {
+        top += 22;
+        left += 22;
+    }
+
 
     playerElement.style.display = "block";
     playerElement.style.top = `${top}px`;
@@ -185,15 +184,23 @@ function movePlayer(playerNum, gridNum) {
 }
 
 function drawBoard() {
-    for(let i=100; i>=1; i--) {
-        let value = String(i);
-        
-        const boardGridItemElement = document.createElement('div');
-        boardGridItemElement.textContent = value;
-        boardGridItemElement.setAttribute('class', 'boardGridItem');
-        boardGridItemElement.setAttribute('id', `boardGridNum${value}`);
+    for(let i=1; i<=10; i++) {        
+        for(let j=1; j<=10; j++) {
+            let gridNum;
+            if(i % 2 == 0) {
+                gridNum = ((10 - i) * 10) + j;
+            }
+            else {
+                gridNum = ((10 - i) * 10) + (11-j);
+            }
 
-        gameBoard.append(boardGridItemElement);
+            const boardGridItemElement = document.createElement('div');
+            boardGridItemElement.textContent = gridNum;
+            boardGridItemElement.setAttribute('class', 'boardGridItem');
+            boardGridItemElement.setAttribute('id', `boardGridNum${gridNum}`);
+
+            gameBoard.append(boardGridItemElement);
+        }        
     }
 }
 
