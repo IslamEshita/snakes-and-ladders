@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snakes and Ladders</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
     <div id="gameContainer">
-        <section id="gameBoard">
-        </section>
-        <section id="controls">
-            <div id="diceControls">
-                <input type="button" value="Roll Dice" id="rollButton">
-                <p id="diceValue"></p>
-            </div>
-            <p id="gameResult"></p>
-        </section>
+      <section id="gameBoard">
+        <div id="gameResult"></div>
+        <input type="button" value="Start New Game" id="newGameButton" />
+      </section>
+      <section id="controls">
+        <input type="button" value="Roll Dice" id="rollButton" />
+        <span id="diceValue"></span>
+      </section>
+      <section id="gameHistory">
+        <p id="lastRoll"></p>
+      </section>
+      <section id="result"></section>
     </div>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>

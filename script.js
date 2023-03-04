@@ -1,12 +1,21 @@
 const gameBoard = document.getElementById('gameBoard');
-const rollButton = document.getElementById('rollButton');
-const diceValue = document.getElementById('diceValue');
 const gameResult = document.getElementById('gameResult');
+const rollButton = document.getElementById('rollButton');
+const newGameButton = document.getElementById('newGameButton');
+const diceValue = document.getElementById('diceValue');
+const lastRoll = document.getElementById('lastRoll');
+let lastClearID = -1;
 
 const specialGrids = [
+    { gridNum: 6, type: 'ladder', newPos: 45 },
     { gridNum: 18, type: 'ladder', newPos: 64 },
-    { gridNum: 35, type: 'ladder', newPos: 87 },
+    { gridNum: 31, type: 'snake', newPos: 16 },
+    { gridNum: 35, type: 'ladder', newPos: 87 },    
+    { gridNum: 38, type: 'ladder', newPos: 79 },    
+    { gridNum: 41, type: 'snake', newPos: 26 },
+    { gridNum: 49, type: 'ladder', newPos: 93 },  
     { gridNum: 70, type: 'snake', newPos: 5 },
+    { gridNum: 84, type: 'snake', newPos: 14 },
     { gridNum: 99, type: 'snake', newPos: 44 },
 ]
 
@@ -34,22 +43,29 @@ function adjustIfSpecialGrid(pos) {
 }
 
 function checkForWin() {
+    let gameOver = false;
     if(player1Pos == 100) {
-        gameResult.textContent = "Player 1 Wins!";
+        gameResult.textContent = "Player 1 Wins!";        
+        gameOver = true;      
     }
     else if(player2Pos == 100) {
-        gameResult.textContent = "Player 2 Wins!";
+        gameResult.textContent = "Player 2 Wins!";        
+        gameOver = true;       
+    }
+
+    if(gameOver) {
+        gameResult.style.display = "block";  
+        newGameButton.style.display = "block";
+        rollButton.style.display = "none";
     }
 }
 
 function getNextTurn() {
     if(turn === "Player1") {
         turn = "Player2";
-        rollButton.value="Roll Dice (Player 2)";
     }
     else {
         turn = "Player1";
-        rollButton.value="Roll Dice (Player 1)";
     }
 }
 
@@ -108,10 +124,15 @@ function getColumn(gridNum) {
     return column;
 }
 
-
 function getDiceValue() {
     const dice = 1 + Math.floor(Math.random()*6);
     diceValue.textContent = dice;
+    if(turn == "Player1") {
+        diceValue.style.color = 'red';
+    }
+    else {
+        diceValue.style.color = 'blue';
+    }
 
     return dice;
 }
@@ -119,6 +140,10 @@ function getDiceValue() {
 function rollButtonClicked(ev) {    
 
     const num = getDiceValue();
+    updateLastRoll(num);
+
+    clearTimeout(lastClearID);
+    lastClearID = setTimeout(clearDiceValue, 2000);
 
     if(turn === "Player1")
     {
@@ -127,7 +152,7 @@ function rollButtonClicked(ev) {
         if(newPos <= 100)
         {
             player1Pos = newPos;
-            movePlayer(1, player1Pos);
+            movePlayerToGrid(1, player1Pos);
         }
     }
     else
@@ -137,7 +162,7 @@ function rollButtonClicked(ev) {
         if(newPos <= 100)
         {
             player2Pos = newPos;
-            movePlayer(2, player2Pos);
+            movePlayerToGrid(2, player2Pos);
         }
     }
     
@@ -145,22 +170,30 @@ function rollButtonClicked(ev) {
     checkForWin();
 }
 
+function clearDiceValue() {
+    diceValue.textContent = "";
+}
+
 function drawPlayer(playerNum) {    
-    const player = document.createElement('img');
-    player.style.display = "none";
+    const player = document.createElement('img');   
     player.setAttribute('id', `player${playerNum}`);
-    player.setAttribute('src', `assets/token_player_${playerNum}.png`);
+    player.setAttribute('src', `assets/tokens/player${playerNum}.png`);
     player.setAttribute('class', 'player');
 
     gameBoard.append(player);
 }
 
-function movePlayer(playerNum, gridNum) {
+function drawPlayers() {
+    drawPlayer(1);
+    drawPlayer(2);
+}
+
+function movePlayerToGrid(playerNum, gridNum) {
     const playerElement = document.getElementById(`player${playerNum}`);
 
-    const numGrids = 100;
     const numRows = 10;
     const numCols = 10;
+    const numGrids = numRows * numCols;
     const boardWidth = 750;
     const boardHeight = 750;
     const gridWidth = boardWidth / numCols;
@@ -172,12 +205,16 @@ function movePlayer(playerNum, gridNum) {
     // Get the top, bottom
     let top = (row * gridHeight);
     let left = (col * gridWidth);
-    if(playerNum == 2) {
-        top += 22;
-        left += 22;
+    // Adjust top and left for the player
+    if(playerNum == 1) {
+        top +=2;
+        left += 2;
     }
-
-
+    else if(playerNum == 2) {
+        top += 27;
+        left += 27;
+    }
+    // Set the top and left styles
     playerElement.style.display = "block";
     playerElement.style.top = `${top}px`;
     playerElement.style.left = `${left}px`;
@@ -204,42 +241,92 @@ function drawBoard() {
     }
 }
 
+function drawSnake(id) {
+    const snake = document.createElement('img');
+    const snakeID = `snake${id}`
+    snake.setAttribute('class', 'snake');
+    snake.setAttribute('id', snakeID);    
+    snake.setAttribute('src', `assets/snakes/${snakeID}.png`);
+    gameBoard.append(snake); 
+}
+
 function drawSnakes() {
-    // Add the first snake
-    const snake01 = document.createElement('img');
-    snake01.setAttribute('id', 'snake01');
-    snake01.setAttribute('class', 'snake');
-    snake01.setAttribute('src', 'assets/snake01.png');
-    gameBoard.append(snake01);
-    // Add the second snake
-    const snake02 = document.createElement('img');
-    snake02.setAttribute('id', 'snake02');
-    snake02.setAttribute('class', 'snake');
-    snake02.setAttribute('src', 'assets/snake02.png');
-    gameBoard.append(snake02);
+   for(let i=1; i<=5; i++) {
+    drawSnake(i);
+   }
+}
+
+function drawLadder(id) {
+    const ladder = document.createElement('img');
+    const ladderID = `ladder${id}`
+    ladder.setAttribute('class', 'ladder');
+    ladder.setAttribute('id', ladderID);    
+    ladder.setAttribute('src', `assets/ladders/${ladderID}.png`);
+    gameBoard.append(ladder);
 }
 
 function drawLadders() {
-    const ladder01 = document.createElement('img');
-    ladder01.setAttribute('id', 'ladder01');
-    ladder01.setAttribute('class', 'ladder');
-    ladder01.setAttribute('src', 'assets/ladder01.png');
-    gameBoard.append(ladder01);
+    for(let i=1; i<=5; i++) {
+        drawLadder(i);
+    }
+} 
 
-    const ladder02 = document.createElement('img');
-    ladder02.setAttribute('id', 'ladder02');
-    ladder02.setAttribute('class', 'ladder');
-    ladder02.setAttribute('src', 'assets/ladder01.png');
-    gameBoard.append(ladder02);
+function updateLastRoll(roll) {
+    let player;
+    if(turn == "Player1") {
+        player = "Player #1";
+    }
+    else
+    {
+        player = "Player #2";
+    }
+
+    lastRoll.textContent = `${player} rolled a ${roll}`;
+}
+
+function startNewGame() {
+    // Reset player position
+    player1Pos = 0;
+    player2Pos = 0;
+    turn = "None";
+
+    // Hide Player 1 token
+    document.getElementById('player1').style.display = "none";
+    // Hide Player 2 token
+    document.getElementById('player2').style.display = "none";
+    // Clear out the last roll
+    lastRoll.textContent = "";
+
+    // Hide the new game button
+    newGameButton.style.display = "none";
+    // Hide the game result
+    gameResult.style.display = "none";
+
+    // Show the roll button
+    rollButton.style.display = "inline-block";
+        
+    getNextTurn();    
 }
 
 document.body.onload = function() {    
-    rollButton.onclick = rollButtonClicked;
-
+    // Draw the board, snakes, ladders and icons
     drawBoard();
     drawSnakes();
     drawLadders();
-    drawPlayer(1);
-    drawPlayer(2);
-    getNextTurn();
+    drawPlayers();
+
+    // Hide the new game button
+    gameResult.style.display = "none";
+    // Hide the roll button
+    rollButton.style.display = "none";
+    // Hide Player 1 token
+    document.getElementById('player1').style.display = "none";
+    // Hide Player 2 token
+    document.getElementById('player2').style.display = "none";
+    
+    // Add the roll button listener
+    rollButton.onclick = rollButtonClicked;
+    
+    // Add new game button listener
+    newGameButton.onclick = startNewGame;
 }
