@@ -107,12 +107,23 @@
   z-index: 100;
 }
 
+#controls {
+  display: flex;
+  margin-top: 3px;
+}
+
 #rollButton {
   background-color: aliceblue;
   font-size: 40px;
-  margin-top: 25px;
-  margin-bottom: 5px;
-  display: inline-block;
+  margin-top: 3px;
+}
+
+#diceValueImage {
+    height: 60px;
+    margin-top: 3px;
+    padding-left: 10px;
+    object-fit: contain;
+    visibility: hidden;
 }
 
 #diceValue {

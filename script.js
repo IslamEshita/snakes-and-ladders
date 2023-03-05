@@ -2,7 +2,7 @@ const gameBoard = document.getElementById('gameBoard');
 const gameResult = document.getElementById('gameResult');
 const rollButton = document.getElementById('rollButton');
 const newGameButton = document.getElementById('newGameButton');
-const diceValue = document.getElementById('diceValue');
+const diceValueImage = document.getElementById('diceValueImage');
 const lastRoll = document.getElementById('lastRoll');
 let lastClearID = -1;
 
@@ -126,13 +126,17 @@ function getColumn(gridNum) {
 
 function getDiceValue() {
     const dice = 1 + Math.floor(Math.random()*6);
-    diceValue.textContent = dice;
+
+    let color;
     if(turn == "Player1") {
-        diceValue.style.color = 'red';
+        color = "red";
     }
     else {
-        diceValue.style.color = 'blue';
+        color = "blue";
     }
+
+    diceValueImage.src = `assets/dice/dice_${color}_${dice}.png`;
+    diceValueImage.style.visibility = "visible";
 
     return dice;
 }
@@ -171,7 +175,7 @@ function rollButtonClicked(ev) {
 }
 
 function clearDiceValue() {
-    diceValue.textContent = "";
+    diceValueImage.style.visibility = "hidden";
 }
 
 function drawPlayer(playerNum) {    
