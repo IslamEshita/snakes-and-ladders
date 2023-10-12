@@ -1,0 +1,19 @@
+{
+  "name": "snakes-and-ladders",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IslamEshita/snakes-and-ladders.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IslamEshita/snakes-and-ladders/issues"
+  },
+  "homepage": "https://github.com/IslamEshita/snakes-and-ladders#readme"
+}
