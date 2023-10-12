@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/IslamEshita/snakes-and-ladders/issues"
   },
-  "homepage": "https://github.com/IslamEshita/snakes-and-ladders#readme"
+  "homepage": "https://github.com/IslamEshita/snakes-and-ladders#readme",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
 }
