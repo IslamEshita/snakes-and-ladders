@@ -4,6 +4,8 @@ const rollButton : HTMLElement|null = document.getElementById('rollButton');
 const newGameButton : HTMLElement|null = document.getElementById('newGameButton');
 const diceValueImage : HTMLElement | null = document.getElementById('diceValueImage');
 const lastRoll : HTMLElement|null = document.getElementById('lastRoll');
+let player1Element: HTMLElement | null;
+let player2Element: HTMLElement | null;
 let lastClearID : number = -1;
 
 const specialGrids = [
@@ -141,8 +143,9 @@ function getDiceValue() {
     return dice;
 }
 
-function rollButtonClicked(ev) {    
+function rollButtonClicked(ev: Event) {    
 
+    let newPos: number;
     const num = getDiceValue();
     updateLastRoll(num);
 
@@ -175,16 +178,16 @@ function rollButtonClicked(ev) {
 }
 
 function clearDiceValue() {
-    diceValueImage.style.visibility = "hidden";
+    if(diceValueImage != null) diceValueImage.style.visibility = "hidden";
 }
 
-function drawPlayer(playerNum) {    
+function drawPlayer(playerNum:number) {    
     const player = document.createElement('img');   
     player.setAttribute('id', `player${playerNum}`);
     player.setAttribute('src', `assets/tokens/player${playerNum}.png`);
     player.setAttribute('class', 'player');
 
-    gameBoard.append(player);
+    if(gameBoard != null) gameBoard.append(player);
 }
 
 function drawPlayers() {
@@ -192,12 +195,11 @@ function drawPlayers() {
     drawPlayer(2);
 }
 
-function movePlayerToGrid(playerNum, gridNum) {
+function movePlayerToGrid(playerNum:number, gridNum:number) {
     const playerElement = document.getElementById(`player${playerNum}`);
 
     const numRows = 10;
     const numCols = 10;
-    const numGrids = numRows * numCols;
     const boardWidth = 750;
     const boardHeight = 750;
     const gridWidth = boardWidth / numCols;
@@ -219,9 +221,9 @@ function movePlayerToGrid(playerNum, gridNum) {
         left += 27;
     }
     // Set the top and left styles
-    playerElement.style.display = "block";
-    playerElement.style.top = `${top}px`;
-    playerElement.style.left = `${left}px`;
+    if(playerElement != null) playerElement.style.display = "block";
+    if(playerElement != null) playerElement.style.top = `${top}px`;
+    if(playerElement != null) playerElement.style.left = `${left}px`;
 }
 
 function drawBoard() {
@@ -236,22 +238,22 @@ function drawBoard() {
             }
 
             const boardGridItemElement = document.createElement('div');
-            boardGridItemElement.textContent = gridNum;
+            boardGridItemElement.textContent = `${gridNum}`;
             boardGridItemElement.setAttribute('class', 'boardGridItem');
             boardGridItemElement.setAttribute('id', `boardGridNum${gridNum}`);
 
-            gameBoard.append(boardGridItemElement);
+            if(gameBoard != null) gameBoard.append(boardGridItemElement);
         }        
     }
 }
 
-function drawSnake(id) {
+function drawSnake(id:number) {
     const snake = document.createElement('img');
     const snakeID = `snake${id}`
     snake.setAttribute('class', 'snake');
     snake.setAttribute('id', snakeID);    
     snake.setAttribute('src', `assets/snakes/${snakeID}.png`);
-    gameBoard.append(snake); 
+    if(gameBoard != null) gameBoard.append(snake); 
 }
 
 function drawSnakes() {
@@ -260,13 +262,13 @@ function drawSnakes() {
    }
 }
 
-function drawLadder(id) {
+function drawLadder(id:number) {
     const ladder = document.createElement('img');
     const ladderID = `ladder${id}`
     ladder.setAttribute('class', 'ladder');
     ladder.setAttribute('id', ladderID);    
     ladder.setAttribute('src', `assets/ladders/${ladderID}.png`);
-    gameBoard.append(ladder);
+    if(gameBoard != null) gameBoard.append(ladder);
 }
 
 function drawLadders() {
@@ -275,7 +277,7 @@ function drawLadders() {
     }
 } 
 
-function updateLastRoll(roll) {
+function updateLastRoll(roll:number) {
     let player;
     if(turn == "Player1") {
         player = "Player #1";
@@ -285,7 +287,7 @@ function updateLastRoll(roll) {
         player = "Player #2";
     }
 
-    lastRoll.textContent = `${player} rolled a ${roll}`;
+    if(lastRoll != null) lastRoll.textContent = `${player} rolled a ${roll}`;
 }
 
 function startNewGame() {
@@ -295,19 +297,21 @@ function startNewGame() {
     turn = "None";
 
     // Hide Player 1 token
-    document.getElementById('player1').style.display = "none";
+    player1Element = document.getElementById('player1');
+    if(player1Element != null) player1Element.style.display = "none";
     // Hide Player 2 token
-    document.getElementById('player2').style.display = "none";
+    let player2Element = document.getElementById('player2');
+    if(player2Element != null) player2Element.style.display = "none";
     // Clear out the last roll
-    lastRoll.textContent = "";
+    if(lastRoll != null) lastRoll.textContent = "";
 
     // Hide the new game button
-    newGameButton.style.display = "none";
+    if(newGameButton != null) newGameButton.style.display = "none";
     // Hide the game result
-    gameResult.style.display = "none";
+    if(gameResult != null) gameResult.style.display = "none";
 
     // Show the roll button
-    rollButton.style.display = "inline-block";
+    if(rollButton != null) rollButton.style.display = "inline-block";
         
     getNextTurn();    
 }
@@ -320,17 +324,19 @@ document.body.onload = function() {
     drawPlayers();
 
     // Hide the new game button
-    gameResult.style.display = "none";
+    if(gameResult != null) gameResult.style.display = "none";
     // Hide the roll button
-    rollButton.style.display = "none";
+    if(rollButton != null) rollButton.style.display = "none";
     // Hide Player 1 token
-    document.getElementById('player1').style.display = "none";
+    let player1Element = document.getElementById('player1');
+    if(player1Element != null) player1Element.style.display = "none";
     // Hide Player 2 token
-    document.getElementById('player2').style.display = "none";
+    let player2Element = document.getElementById('player2');
+    if(player2Element != null) player2Element.style.display = "none";
     
     // Add the roll button listener
-    rollButton.onclick = rollButtonClicked;
+    if(rollButton != null) rollButton.onclick = rollButtonClicked;
     
     // Add new game button listener
-    newGameButton.onclick = startNewGame;
+    if(newGameButton != null) newGameButton.onclick = startNewGame;
 }

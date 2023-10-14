@@ -5,6 +5,8 @@ const rollButton = document.getElementById('rollButton');
 const newGameButton = document.getElementById('newGameButton');
 const diceValueImage = document.getElementById('diceValueImage');
 const lastRoll = document.getElementById('lastRoll');
+let player1Element;
+let player2Element;
 let lastClearID = -1;
 const specialGrids = [
     { gridNum: 6, type: 'ladder', newPos: 45 },
@@ -39,17 +41,22 @@ function adjustIfSpecialGrid(pos) {
 function checkForWin() {
     let gameOver = false;
     if (player1Pos == 100) {
-        gameResult.textContent = "Player 1 Wins!";
+        if (gameResult != null)
+            gameResult.textContent = "Player 1 Wins!";
         gameOver = true;
     }
     else if (player2Pos == 100) {
-        gameResult.textContent = "Player 2 Wins!";
+        if (gameResult != null)
+            gameResult.textContent = "Player 2 Wins!";
         gameOver = true;
     }
     if (gameOver) {
-        gameResult.style.display = "block";
-        newGameButton.style.display = "block";
-        rollButton.style.display = "none";
+        if (gameResult != null)
+            gameResult.style.display = "block";
+        if (newGameButton != null)
+            newGameButton.style.display = "block";
+        if (rollButton != null)
+            rollButton.style.display = "none";
     }
 }
 function getNextTurn() {
@@ -116,11 +123,14 @@ function getDiceValue() {
     else {
         color = "blue";
     }
-    diceValueImage.src = `assets/dice/dice_${color}_${dice}.png`;
-    diceValueImage.style.visibility = "visible";
+    if (diceValueImage != null)
+        diceValueImage.src = `assets/dice/dice_${color}_${dice}.png`;
+    if (diceValueImage != null)
+        diceValueImage.style.visibility = "visible";
     return dice;
 }
 function rollButtonClicked(ev) {
+    let newPos;
     const num = getDiceValue();
     updateLastRoll(num);
     clearTimeout(lastClearID);
@@ -145,14 +155,16 @@ function rollButtonClicked(ev) {
     checkForWin();
 }
 function clearDiceValue() {
-    diceValueImage.style.visibility = "hidden";
+    if (diceValueImage != null)
+        diceValueImage.style.visibility = "hidden";
 }
 function drawPlayer(playerNum) {
     const player = document.createElement('img');
     player.setAttribute('id', `player${playerNum}`);
     player.setAttribute('src', `assets/tokens/player${playerNum}.png`);
     player.setAttribute('class', 'player');
-    gameBoard.append(player);
+    if (gameBoard != null)
+        gameBoard.append(player);
 }
 function drawPlayers() {
     drawPlayer(1);
@@ -162,7 +174,6 @@ function movePlayerToGrid(playerNum, gridNum) {
     const playerElement = document.getElementById(`player${playerNum}`);
     const numRows = 10;
     const numCols = 10;
-    const numGrids = numRows * numCols;
     const boardWidth = 750;
     const boardHeight = 750;
     const gridWidth = boardWidth / numCols;
@@ -183,9 +194,12 @@ function movePlayerToGrid(playerNum, gridNum) {
         left += 27;
     }
     // Set the top and left styles
-    playerElement.style.display = "block";
-    playerElement.style.top = `${top}px`;
-    playerElement.style.left = `${left}px`;
+    if (playerElement != null)
+        playerElement.style.display = "block";
+    if (playerElement != null)
+        playerElement.style.top = `${top}px`;
+    if (playerElement != null)
+        playerElement.style.left = `${left}px`;
 }
 function drawBoard() {
     for (let i = 1; i <= 10; i++) {
@@ -198,10 +212,11 @@ function drawBoard() {
                 gridNum = ((10 - i) * 10) + (11 - j);
             }
             const boardGridItemElement = document.createElement('div');
-            boardGridItemElement.textContent = gridNum;
+            boardGridItemElement.textContent = `${gridNum}`;
             boardGridItemElement.setAttribute('class', 'boardGridItem');
             boardGridItemElement.setAttribute('id', `boardGridNum${gridNum}`);
-            gameBoard.append(boardGridItemElement);
+            if (gameBoard != null)
+                gameBoard.append(boardGridItemElement);
         }
     }
 }
@@ -211,7 +226,8 @@ function drawSnake(id) {
     snake.setAttribute('class', 'snake');
     snake.setAttribute('id', snakeID);
     snake.setAttribute('src', `assets/snakes/${snakeID}.png`);
-    gameBoard.append(snake);
+    if (gameBoard != null)
+        gameBoard.append(snake);
 }
 function drawSnakes() {
     for (let i = 1; i <= 5; i++) {
@@ -224,7 +240,8 @@ function drawLadder(id) {
     ladder.setAttribute('class', 'ladder');
     ladder.setAttribute('id', ladderID);
     ladder.setAttribute('src', `assets/ladders/${ladderID}.png`);
-    gameBoard.append(ladder);
+    if (gameBoard != null)
+        gameBoard.append(ladder);
 }
 function drawLadders() {
     for (let i = 1; i <= 5; i++) {
@@ -239,7 +256,8 @@ function updateLastRoll(roll) {
     else {
         player = "Player #2";
     }
-    lastRoll.textContent = `${player} rolled a ${roll}`;
+    if (lastRoll != null)
+        lastRoll.textContent = `${player} rolled a ${roll}`;
 }
 function startNewGame() {
     // Reset player position
@@ -247,17 +265,25 @@ function startNewGame() {
     player2Pos = 0;
     turn = "None";
     // Hide Player 1 token
-    document.getElementById('player1').style.display = "none";
+    player1Element = document.getElementById('player1');
+    if (player1Element != null)
+        player1Element.style.display = "none";
     // Hide Player 2 token
-    document.getElementById('player2').style.display = "none";
+    let player2Element = document.getElementById('player2');
+    if (player2Element != null)
+        player2Element.style.display = "none";
     // Clear out the last roll
-    lastRoll.textContent = "";
+    if (lastRoll != null)
+        lastRoll.textContent = "";
     // Hide the new game button
-    newGameButton.style.display = "none";
+    if (newGameButton != null)
+        newGameButton.style.display = "none";
     // Hide the game result
-    gameResult.style.display = "none";
+    if (gameResult != null)
+        gameResult.style.display = "none";
     // Show the roll button
-    rollButton.style.display = "inline-block";
+    if (rollButton != null)
+        rollButton.style.display = "inline-block";
     getNextTurn();
 }
 document.body.onload = function () {
@@ -267,15 +293,23 @@ document.body.onload = function () {
     drawLadders();
     drawPlayers();
     // Hide the new game button
-    gameResult.style.display = "none";
+    if (gameResult != null)
+        gameResult.style.display = "none";
     // Hide the roll button
-    rollButton.style.display = "none";
+    if (rollButton != null)
+        rollButton.style.display = "none";
     // Hide Player 1 token
-    document.getElementById('player1').style.display = "none";
+    let player1Element = document.getElementById('player1');
+    if (player1Element != null)
+        player1Element.style.display = "none";
     // Hide Player 2 token
-    document.getElementById('player2').style.display = "none";
+    let player2Element = document.getElementById('player2');
+    if (player2Element != null)
+        player2Element.style.display = "none";
     // Add the roll button listener
-    rollButton.onclick = rollButtonClicked;
+    if (rollButton != null)
+        rollButton.onclick = rollButtonClicked;
     // Add new game button listener
-    newGameButton.onclick = startNewGame;
+    if (newGameButton != null)
+        newGameButton.onclick = startNewGame;
 };
