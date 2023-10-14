@@ -1,0 +1,35 @@
+$snake-opacity: 0.8;
+
+$snakes: (
+    ("id": 1, "top":-60px, "left":-30px, "height":510px),
+    ("id": 2, "top":130px, "left":190px, "height":610px),
+    ("id": 3, "top":-40px, "left": 60px, "height":730px),
+    ("id": 4, "top":400px, "left":  0px, "height":300px),
+    ("id": 5, "top":450px, "left":320px, "height":300px),  
+);
+
+@function get-snake-z-index($id) {  
+  @return $id;
+}
+
+.snake {
+  position: absolute;
+  opacity: $snake-opacity;
+  z-index: 1;
+}
+
+@each $snake in $snakes {  
+  // Get the id
+  $id: map-get($snake, "id");
+  #snake#{$id} {
+    @extend .snake;
+    // Get the top
+    top: map-get($snake, "top");
+    // Get the left
+    left: map-get($snake, "left");
+    // Get the height
+    height: map-get($snake, "height");
+    // Get the z-index
+    z-index: get-snake-z-index($id);
+  }
+}

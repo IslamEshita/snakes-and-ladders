@@ -1,0 +1,109 @@
+// Game board variables
+$game-board-border-color: green;
+$game-board-border-width: 10px;
+$game-board-border-style: solid;
+$game-board-width: 750px;
+$game-board-height: 750px;
+
+#gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#gameBoard {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    border: $game-board-border-width $game-board-border-style $game-board-border-color;
+    position: relative;
+    width: $game-board-width;
+    height: $game-board-height;
+    min-width: $game-board-width;
+}
+
+// Board grid variables
+$board-grid-item-background-color: lightgreen;
+$board-grid-item-border-width: 3px;
+$board-grid-item-border-style: solid;
+$board-grid-item-border-color: rgba(0, 0, 0, 0.8);
+$board-grid-item-font-size: 25px;
+ 
+.boardGridItem {
+    background-color: $board-grid-item-background-color;
+    border: $board-grid-item-border-width $board-grid-item-border-style $board-grid-item-border-color;
+    font-size: $board-grid-item-font-size;
+    text-align: center;
+}
+
+// Player variables
+$player-width: 45px;
+$player-height:45px;
+$player-opacity: 0.5;
+$player-z-index: 100;
+
+.player {
+    position: absolute;
+    width: $player-width;
+    height: $player-height;
+    opacity: $player-opacity;
+    z-index: $player-z-index;
+  }
+  
+#controls {
+    display: flex;
+    margin-top: 3px;
+}
+
+#rollButton {
+    background-color: aliceblue;
+    font-size: 40px;
+    margin-top: 3px;
+}
+
+#diceValueImage {
+    height: 60px;
+    margin-top: 3px;
+    padding-left: 10px;
+    object-fit: contain;
+    visibility: hidden;
+}
+
+#diceValue {
+    color: red;
+    font-size: 50px;
+    margin-left: 10px;
+    margin-top: 0;
+}
+
+#lastRoll {
+    font-size: 2em;
+    font-style: italic;
+}
+
+#gameResult {
+    position: absolute;
+    top: 200px;
+    left:100px;
+    font-size: 4em;
+    box-sizing: border-box;
+    background-color: orange;
+    width: 550px;
+    height: 100px;
+    z-index: 100;
+    opacity: 0.8;
+    border: 5px solid red;
+    text-align: center;
+}
+
+#newGameButton {
+    position:absolute;
+    box-sizing: border-box;
+    top: 310px;
+    left: 175px;
+    width: 400px;
+    border: 3px solid green;
+    font-size: 48px;
+    background-color: aqua;
+    z-index: 100;
+}
+  

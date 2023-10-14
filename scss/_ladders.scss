@@ -1,0 +1,29 @@
+$ladder-opacity: 0.9;
+
+@mixin ladder-styles($top, $left, $height) {
+  position: absolute;
+  opacity: $ladder-opacity;
+  top: $top;
+  left: $left;
+  height: $height;
+  z-index: 10;
+}
+
+$ladders_info: (
+  (1, 190px, 125px, 500px),
+  (2, 38px, 350px, 500px),
+  (3, 135px, 70px, 400px),
+  (4, 360px, 300px, 400px),
+  (5, 0px, 505px, 470px)
+);
+
+@each $ladder in $ladders_info {
+  $ladder_number: nth($ladder, 1);
+  $ladder_top: nth($ladder, 2);
+  $ladder_left: nth($ladder, 3);
+  $ladder_height: nth($ladder, 4);
+    
+  #ladder#{$ladder_number} {
+    @include ladder-styles($ladder_top, $ladder_left, $ladder_height);
+  }
+}

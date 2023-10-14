@@ -5,105 +5,27 @@
 }
 
 #gameBoard {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    border: 3px solid blue;
-    position: relative;
-    width: 750px;
-    height: 750px;
-    min-width: 750px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border: 10px solid green;
+  position: relative;
+  width: 750px;
+  height: 750px;
+  min-width: 750px;
 }
 
 .boardGridItem {
-    background-color: lightgreen;
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    font-size: 25px;
-    text-align: center;
-}
-
-.snake {
-  position: absolute;
-  opacity: 0.8;
-  z-index: 1;
-}
-
-#snake1 {
-  top: -60px;
-  left: -30px;
-  height: 500px;
-  z-index: 3;
-}
-
-#snake2 {
-  top: 130px;
-  left: 190px;
-  height: 610px;
-  z-index: 4;
-}
-
-#snake3 {
-  top: -40px;
-  left: 60px;
-  height: 730px;
-  z-index: 5;
-}
-
-#snake4 {
-  top: 400px;
-  left: 0px;
-  height: 300px;
-  z-index: 6;
-}
-
-#snake5 {
-  top: 450px;
-  left: 320px;
-  height: 300px;
-  z-index: 2;
-}
-
-.ladder {
-  position: absolute;
-  opacity: 0.7;
-  z-index: 1;
-}
-
-#ladder1 {
-  top: 190px;
-  left: 125px;
-  height: 500px;
-  z-index: 10;
-}
-
-#ladder2 {
-  top: 38px;
-  left: 350px;
-  height: 500px;
-}
-
-#ladder3 {
-  top: 135px;
-  left: 70px;
-  height: 400px;
-}
-
-#ladder4 {
-  top: 360px;
-  left: 300px;
-  height: 400px;
-}
-
-#ladder5 {
-  top:0px;
-  left:505px;
-  height:470px;
+  background-color: lightgreen;
+  border: 3px solid rgba(0, 0, 0, 0.8);
+  font-size: 25px;
+  text-align: center;
 }
 
 .player {
   position: absolute;
   width: 45px;
   height: 45px;
-  opacity: 0.50;
+  opacity: 0.5;
   z-index: 100;
 }
 
@@ -119,11 +41,11 @@
 }
 
 #diceValueImage {
-    height: 60px;
-    margin-top: 3px;
-    padding-left: 10px;
-    object-fit: contain;
-    visibility: hidden;
+  height: 60px;
+  margin-top: 3px;
+  padding-left: 10px;
+  object-fit: contain;
+  visibility: hidden;
 }
 
 #diceValue {
@@ -141,7 +63,7 @@
 #gameResult {
   position: absolute;
   top: 200px;
-  left:100px;
+  left: 100px;
   font-size: 4em;
   box-sizing: border-box;
   background-color: orange;
@@ -154,7 +76,7 @@
 }
 
 #newGameButton {
-  position:absolute;
+  position: absolute;
   box-sizing: border-box;
   top: 310px;
   left: 175px;
@@ -164,3 +86,91 @@
   background-color: aqua;
   z-index: 100;
 }
+
+.snake, #snake5, #snake4, #snake3, #snake2, #snake1 {
+  position: absolute;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+#snake1 {
+  top: -60px;
+  left: -30px;
+  height: 510px;
+  z-index: 1;
+}
+
+#snake2 {
+  top: 130px;
+  left: 190px;
+  height: 610px;
+  z-index: 2;
+}
+
+#snake3 {
+  top: -40px;
+  left: 60px;
+  height: 730px;
+  z-index: 3;
+}
+
+#snake4 {
+  top: 400px;
+  left: 0px;
+  height: 300px;
+  z-index: 4;
+}
+
+#snake5 {
+  top: 450px;
+  left: 320px;
+  height: 300px;
+  z-index: 5;
+}
+
+#ladder1 {
+  position: absolute;
+  opacity: 0.9;
+  top: 190px;
+  left: 125px;
+  height: 500px;
+  z-index: 10;
+}
+
+#ladder2 {
+  position: absolute;
+  opacity: 0.9;
+  top: 38px;
+  left: 350px;
+  height: 500px;
+  z-index: 10;
+}
+
+#ladder3 {
+  position: absolute;
+  opacity: 0.9;
+  top: 135px;
+  left: 70px;
+  height: 400px;
+  z-index: 10;
+}
+
+#ladder4 {
+  position: absolute;
+  opacity: 0.9;
+  top: 360px;
+  left: 300px;
+  height: 400px;
+  z-index: 10;
+}
+
+#ladder5 {
+  position: absolute;
+  opacity: 0.9;
+  top: 0px;
+  left: 505px;
+  height: 470px;
+  z-index: 10;
+}
+
+/*# sourceMappingURL=styles.css.map */
