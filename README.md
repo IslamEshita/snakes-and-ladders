@@ -27,4 +27,29 @@ If making contributions, please stick to using only HTML, CSS and Javascript and
 ### Direction on Contributing
 Please create a fork of the project, push changes to your own branch and create a pull request. If the changes are deemed valuable, they will be pulled in.
 
+## Issues
+The application is functional and there are no known issues from a functionality stand point. However, there are always room for potential enhancements such as
+the following:
+1. Be able to dynmically create the snakes and ladders instead of hard-coding
+2. Add animation for enriching the user experience
+
+## Changelog
+The following changelog was generated using the commit messages using the following command: `git log --pretty="- %s`
+- Merge branch 'main' of https://github.com/IslamEshita/snakes-and-ladders
+- Showing dice image instead of value following a roll
+- Update index.html
+- Restructured the images. Added more snakes and ladders
+- Drew up the proper board
+- Added a second ladder
+- Added ability to climb ladders and get bitten by snakes
+- Added checking for winner
+- Added check for not going past 100 on the board
+- Added 2 snakes and one ladder
+- Updated the tokens for player 1 and 2
+- Added basic code for moving a token
+- Added code for drawing a basic board
+- Created a basic page, and linked up javascript and stylesheet
+- Creating empty html, css and javascript files
+
+
 
