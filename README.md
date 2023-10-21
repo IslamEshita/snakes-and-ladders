@@ -51,5 +51,6 @@ The following changelog was generated using the commit messages using the follow
 - Created a basic page, and linked up javascript and stylesheet
 - Creating empty html, css and javascript files
 
-
+## API Documentation
+This project does not have any API so this section is empty.
 
